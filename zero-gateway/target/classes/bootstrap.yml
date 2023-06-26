@@ -1,0 +1,17 @@
+server:
+  port: 8301
+spring:
+  application:
+    name: Zero-Gateway
+  cloud:
+    nacos:
+      discovery:
+        namespace: dev
+        server-addr: 150.158.78.149:8848
+      config:
+        namespace: dev
+        server-addr: 150.158.78.149:8848
+        # 配置文件格式
+        file-extension: yml
+
+
