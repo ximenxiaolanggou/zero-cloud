@@ -12,6 +12,8 @@
         <module>zero-gateway</module>
         <module>zero-framework</module>
         <module>zero-framework/zero-common</module>
+        <module>zero-server</module>
+        <module>zero-server/zero-server-system</module>
     </modules>
 
     <properties>

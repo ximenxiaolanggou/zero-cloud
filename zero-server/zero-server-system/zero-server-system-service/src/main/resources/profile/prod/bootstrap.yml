@@ -1,0 +1,19 @@
+server:
+  port: 8080
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  application:
+    name: WoGua-Server-System
+  cloud:
+    nacos:
+      discovery:
+        server-addr: nacos.wogua-cloud:8848
+        namespace: prod
+      config:
+        server-addr: nacos.wogua-cloud:8848
+        # 配置文件格式
+        namespace: prod
+        file-extension: yml
+
+

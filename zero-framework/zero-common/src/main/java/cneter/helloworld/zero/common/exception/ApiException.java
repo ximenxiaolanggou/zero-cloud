@@ -5,7 +5,7 @@ import lombok.Data;
 
 /**
  * @author zhishun.cai
- * @date 2021/4/2 9:38
+ * @date 2023/6/27
  *
  * 自定义全局异常
  */

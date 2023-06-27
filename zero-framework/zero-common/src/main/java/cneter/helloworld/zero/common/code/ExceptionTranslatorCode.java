@@ -6,7 +6,7 @@ package cneter.helloworld.zero.common.code;
  * </p>
  *
  * @author zhishun.cai
- * @since 2022/9/22 10:36
+ * @date 2023/6/27
  */
 public enum ExceptionTranslatorCode {
     ERROR_AUTH(false, 10000, "认证失败"),

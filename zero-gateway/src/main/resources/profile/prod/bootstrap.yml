@@ -1,8 +1,8 @@
 server:
-  port: 8080
+  port: 6000
 spring:
   application:
-    name: WoGua-Gateway
+    name: Zero-Gateway
   cloud:
     nacos:
       discovery:
@@ -11,7 +11,7 @@ spring:
       config:
         server-addr: nacos.wogua-cloud:8848
         # 配置文件格式
-        namespace: prod
+        namespace: pro
         file-extension: yml
 
 
