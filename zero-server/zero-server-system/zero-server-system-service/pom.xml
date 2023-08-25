@@ -12,8 +12,8 @@
     <artifactId>zero-server-system-service</artifactId>
 
     <properties>
-        <maven.compiler.source>17</maven.compiler.source>
-        <maven.compiler.target>17</maven.compiler.target>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
     <dependencies>
@@ -58,7 +58,7 @@
     </profiles>
 
     <build>
-        <finalName>wogua-auth</finalName>
+        <finalName>zero-server-system-service</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
