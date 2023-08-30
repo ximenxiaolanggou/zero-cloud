@@ -1,5 +1,0 @@
-center\helloworld\zero\server\system\SystemApp.class
-center\helloworld\zero\server\system\controller\AuthController.class
-center\helloworld\zero\server\system\service\SysUserService.class
-center\helloworld\zero\server\system\controller\SysUserController.class
-center\helloworld\zero\server\system\mapper\SysUserMapper.class

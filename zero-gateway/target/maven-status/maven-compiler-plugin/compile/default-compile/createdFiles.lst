@@ -1,7 +1,0 @@
-center\helloworld\zero\gateway\filter\ZeroGatewayLogtFilter.class
-center\helloworld\zero\gateway\filter\JwtFilter.class
-center\helloworld\zero\gateway\configure\ZeroGatewayErrorConfigure.class
-center\helloworld\zero\gateway\filter\WebFluxSecurityCorsFilter.class
-center\helloworld\zero\gateway\filter\ZeroGatewayRequestFilter.class
-center\helloworld\zero\gateway\handler\ZeroGatewayExceptionHandler.class
-center\helloworld\zero\gateway\GatewayApp.class
