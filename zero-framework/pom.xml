@@ -12,6 +12,8 @@
     <artifactId>zero-framework</artifactId>
     <modules>
         <module>zero-common</module>
+        <module>zero-starter-datasource</module>
+        <module>zero-starter-web</module>
     </modules>
     <properties>
         <maven.compiler.source>8</maven.compiler.source>

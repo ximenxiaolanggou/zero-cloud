@@ -19,8 +19,8 @@ public class ZeroGatewayRequestFilter implements GlobalFilter {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
 
-        byte[] token = Base64Utils.encode(("wogua-gateway-value").getBytes());
-        ServerHttpRequest build = request.mutate().header("wogua-gateway-key", new String(token)).build();
+        byte[] token = Base64Utils.encode(("zero-gateway-value").getBytes());
+        ServerHttpRequest build = request.mutate().header("zero-gateway-key", new String(token)).build();
         ServerWebExchange newExchange = exchange.mutate().request(build).build();
         return chain.filter(newExchange);
     }
