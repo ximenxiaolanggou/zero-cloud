@@ -4,10 +4,14 @@ import center.helloworld.zero.common.base.Result;
 import center.helloworld.zero.common.code.ResCode;
 import center.helloworld.zero.common.utils.JwtUtil;
 import center.helloworld.zero.gateway.properties.GatewayProperty;
+import cn.hutool.core.codec.Base64;
+import cn.hutool.core.util.CharsetUtil;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.InvalidClaimException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
+import com.auth0.jwt.interfaces.Claim;
+import com.auth0.jwt.interfaces.DecodedJWT;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.lang3.StringUtils;
@@ -17,6 +21,7 @@ import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.stereotype.Component;
 import org.springframework.util.CollectionUtils;
@@ -93,8 +98,17 @@ public class JwtFilter implements GlobalFilter {
         token = token.replace("bearer ","");
         ResCode resCode = null;
         try {
-            JwtUtil.verify(gatewayProperty.getJwtSecret() ,token);
-            return chain.filter(exchange);
+            DecodedJWT decodedJWT = JwtUtil.verify(gatewayProperty.getJwtSecret(), token);
+            ServerHttpRequest.Builder mutate = exchange.getRequest().mutate();
+            // ID
+            mutate.header("id", decodedJWT.getId());
+            // 获取载体信息
+            for (String key : decodedJWT.getClaims().keySet()) {
+                // 防止中文（请求头携带中不可以携带中文，这里用base64进行加密）
+                mutate.header(key, Base64.encode(decodedJWT.getClaim(key).asString(), CharsetUtil.UTF_8));
+            }
+            ServerWebExchange serverWebExchange = exchange.mutate().request(mutate.build()).build();
+            return chain.filter(serverWebExchange);
         } catch (SignatureVerificationException e) {
             e.printStackTrace();
             resCode = ResCode.ERROR_NOT_MATCH_SIGNATURE;
