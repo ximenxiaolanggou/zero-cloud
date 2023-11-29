@@ -45,7 +45,7 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
         //支持写大数据流
         pipeline.addLast(new ChunkedWriteHandler());
         //http聚合器
-        pipeline.addLast(new HttpObjectAggregator(1024 * 3)); // 3KB
+        pipeline.addLast(new HttpObjectAggregator(1024 * 4)); // 4KB
         // 握手处理
         // TODO
         // WebSocket数据压缩 TODO 暂时关闭数据压缩，会导致客户端发送消息报错issule

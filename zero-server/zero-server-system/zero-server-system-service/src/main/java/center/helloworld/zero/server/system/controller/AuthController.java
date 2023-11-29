@@ -40,8 +40,10 @@ public class AuthController {
         String username = loginVO.getUsername();
         SysUser user = userService.findUserByUsername(username);
         // 用户不存在 | 密码错误
-        if (user == null || !BCrypt.checkpw(loginVO.getPassword(), user.getPassword()))
+        if (user == null || !BCrypt.checkpw(loginVO.getPassword(), user.getPassword())) {
             throw new ApiException(ResCode.ERROR_USERNAME_OR_PWD);
+        }
+
 
         Map<String, String> map = new HashMap();
         map.put("username", user.getUsername());

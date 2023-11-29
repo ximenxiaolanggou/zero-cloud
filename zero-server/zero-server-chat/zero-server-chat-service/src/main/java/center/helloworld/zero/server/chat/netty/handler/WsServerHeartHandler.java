@@ -18,6 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class WsServerHeartHandler extends ChannelDuplexHandler {
 
+    @Override
     public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
         if (evt instanceof IdleStateEvent) {
             IdleStateEvent idleStateEvent = (IdleStateEvent) evt;
