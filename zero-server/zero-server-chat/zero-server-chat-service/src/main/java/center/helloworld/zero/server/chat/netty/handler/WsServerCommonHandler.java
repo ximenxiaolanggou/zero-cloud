@@ -1,10 +1,16 @@
 package center.helloworld.zero.server.chat.netty.handler;
 
+import center.helloworld.zero.server.chat.netty.channel.ChannelManager;
+import center.helloworld.zero.server.chat.netty.session.service.SessionService;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+
+import javax.annotation.Resource;
 
 /**
  * @author zhishun.cai
@@ -16,15 +22,20 @@ import org.springframework.stereotype.Component;
 @Component
 public class WsServerCommonHandler extends ChannelInboundHandlerAdapter {
 
-    /**
-     * 关闭连接
-     *
-     * @param ctx 通道上下文
-     */
+    @Resource
+    private ChannelManager channelManager;
+
+    @Autowired
+    private SessionService sessionService;
+
     @Override
-    public void handlerRemoved(ChannelHandlerContext ctx) {
+    public void channelInactive(ChannelHandlerContext ctx) throws Exception {
+        super.channelInactive(ctx);
         try {
-            log.info("断开连接 {}", ctx.channel());
+            log.info("断开连接11 {}", ctx.channel());
+            Object sessionId = ctx.channel().attr(AttributeKey.valueOf("sessionId")).get();
+            channelManager.remove(String.valueOf(sessionId));
+            sessionService.remove(String.valueOf(sessionId));
             ctx.channel().close();
         } catch (Exception e) {
             log.error("==== {}", e.getStackTrace());

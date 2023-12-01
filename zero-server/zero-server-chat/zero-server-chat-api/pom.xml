@@ -27,8 +27,9 @@
             <artifactId>lombok</artifactId>
         </dependency>
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>center.hellowrld</groupId>
+            <artifactId>zero-starter-openfeign</artifactId>
+            <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>center.hellowrld</groupId>
@@ -36,5 +37,4 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
     </dependencies>
-
 </project>

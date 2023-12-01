@@ -48,9 +48,9 @@ public class JwtFilter implements GlobalFilter {
         if(!CollectionUtils.isEmpty(gatewayProperty.getAnonUris())) {
             for (String anonUris : gatewayProperty.getAnonUris()) {
                 if(anonUris.contains("/*")) {
-                    anonUrisCommon.add(anonUris);
-                }else {
                     anonUrisPattern.add(anonUris);
+                }else {
+                    anonUrisCommon.add(anonUris);
                 }
             }
         }

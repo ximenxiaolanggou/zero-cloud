@@ -12,6 +12,7 @@
         <module>zero-gateway</module>
         <module>zero-framework</module>
         <module>zero-server</module>
+        <module>zero-framework/zero-starter-openfeign</module>
     </modules>
 
     <properties>
