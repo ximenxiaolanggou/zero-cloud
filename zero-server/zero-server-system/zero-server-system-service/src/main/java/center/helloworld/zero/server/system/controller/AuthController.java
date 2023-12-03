@@ -66,4 +66,6 @@ public class AuthController {
         map.put("mobile", Base64.decodeStr(request.getHeader("mobile"),  CharsetUtil.UTF_8));
         return Result.ok(map);
     }
+
+
 }

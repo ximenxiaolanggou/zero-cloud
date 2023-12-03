@@ -26,6 +26,9 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
 
     @Resource
     private WsServerCommonHandler wsServerCommonHandler;
+
+    @Resource
+    private WsServerHandshakeHandler wsServerHandshakeHandler;
     
     @Resource
     private WsServerMessageHandler wsServerMessageHandler;
@@ -47,11 +50,12 @@ public class ServerChannelInitializer extends ChannelInitializer<SocketChannel> 
         //http聚合器
         pipeline.addLast(new HttpObjectAggregator(1024 * 4)); // 4KB
         // 握手处理
+        pipeline.addLast(wsServerHandshakeHandler);
         // TODO
         // WebSocket数据压缩 TODO 暂时关闭数据压缩，会导致客户端发送消息报错issule
 //        pipeline.addLast(new WebSocketServerCompressionHandler());
         //websocket支持,设置路由
-        pipeline.addLast(new WebSocketServerProtocolHandler("/ws", true));
+        pipeline.addLast(new WebSocketServerProtocolHandler("/ws/chat", true));
         pipeline.addLast(wsServerMessageHandler);
     }
 }
