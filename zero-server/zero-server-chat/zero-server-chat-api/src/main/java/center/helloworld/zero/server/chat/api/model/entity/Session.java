@@ -22,6 +22,11 @@ public class Session {
     private Long clientId;
 
     /**
+     * 令牌信息
+     */
+    private String token;
+
+    /**
      * 额外属性
      */
     private Map<String, Object> attrs;

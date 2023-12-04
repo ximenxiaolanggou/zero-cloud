@@ -15,6 +15,15 @@ public interface SessionService {
     Session createSession(Long id, Map<String,Object> properties);
 
     /**
+     * 创建会话
+     * @param id
+     * @param token
+     * @param properties
+     * @return
+     */
+    Session createSession(Long id,String token, Map<String,Object> properties);
+
+    /**
      * 根据用户ID获取会话
      * @param userId
      * @return

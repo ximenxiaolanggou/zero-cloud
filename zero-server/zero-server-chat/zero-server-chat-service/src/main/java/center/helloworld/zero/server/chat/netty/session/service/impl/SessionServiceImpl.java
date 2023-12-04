@@ -45,6 +45,26 @@ public class SessionServiceImpl implements SessionService {
     /**
      * 创建会话
      * @param id
+     * @param token
+     * @param properties
+     * @return
+     */
+    @Override
+    public Session createSession(Long id, String token, Map<String, Object> properties) {
+        // TODO这边可以将会话ID生成策略抽取出来
+        String sessionId = UuidUtils.generateUuid();
+        Session session = new Session();
+        session.setSessionId(sessionId);
+        session.setToken(token);
+        session.setClientId(id);
+        session.setAttrs(properties);
+        sessionDao.save(session);
+        return session;
+    }
+
+    /**
+     * 创建会话
+     * @param id
      * @param properties
      * @return
      */
