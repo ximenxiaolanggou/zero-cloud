@@ -4,18 +4,23 @@ package center.helloworld.zero.server.chat.netty.handler;
 import center.helloworld.zero.common.code.ResCode;
 import center.helloworld.zero.common.utils.JwtUtil;
 import center.helloworld.zero.server.chat.api.model.entity.Session;
+import center.helloworld.zero.server.chat.api.model.entity.message.send.SendBaseMsg;
+import center.helloworld.zero.server.chat.api.model.entity.message.send.SendMsgType;
 import center.helloworld.zero.server.chat.netty.channel.ChannelManager;
 import center.helloworld.zero.server.chat.netty.session.service.SessionService;
 import cn.hutool.core.net.url.UrlBuilder;
+import cn.hutool.json.JSONUtil;
 import com.auth0.jwt.exceptions.AlgorithmMismatchException;
 import com.auth0.jwt.exceptions.InvalidClaimException;
 import com.auth0.jwt.exceptions.SignatureVerificationException;
 import com.auth0.jwt.exceptions.TokenExpiredException;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.FullHttpRequest;
+import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.util.AttributeKey;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,12 +49,11 @@ public class WsServerHandshakeHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+        log.info("WsServerHandshakeHandler~~~~~~~~~~~~~~~");
         if (msg instanceof FullHttpRequest) {
             FullHttpRequest request = (FullHttpRequest) msg;
             UrlBuilder urlBuilder = UrlBuilder.ofHttp(request.uri());
             CharSequence token = urlBuilder.getQuery().get("token");
-
-            log.info("WsServerHandshakeHandler~~~~~~~~~~~~~~~");
             ResCode resCode = null;
             String userId = null;
             try {
@@ -77,6 +81,13 @@ public class WsServerHandshakeHandler extends ChannelInboundHandlerAdapter {
             }else {
                 // 令牌合法 创建会话
                 // TODO 防止重复会话
+                Session alreadySession = sessionService.getSessionByUserId(Long.valueOf(userId));
+                if(alreadySession != null) {
+                    // 会话已存在踢出现有会话
+                    Channel channel = channelManager.getChannel(alreadySession.getSessionId());
+                    channel.writeAndFlush(new TextWebSocketFrame(JSONUtil.toJsonStr(new SendBaseMsg<String>(SendMsgType.CLOSE_AFTER_SHOW_MSG, "您被挤下线！"))));
+                    channel.close();
+                }
                 Session session = sessionService.createSession(Long.valueOf(userId), null);
                 ctx.channel().attr(AttributeKey.valueOf("sessionId")).set(session.getSessionId());
                 channelManager.save(session.getSessionId(), ctx.channel());

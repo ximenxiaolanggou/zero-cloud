@@ -24,7 +24,7 @@ public class WebSocketServer implements IServer {
 
     private Channel serverChannel;
 
-    private int port = 7632;
+    private int port = 20000;
 
     private String ip;
 

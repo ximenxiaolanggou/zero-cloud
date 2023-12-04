@@ -1,5 +1,6 @@
 package center.helloworld.zero.server.chat.netty.handler;
 
+import cn.hutool.json.JSONUtil;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -9,6 +10,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.HashMap;
 
 /**
  * @author zhishun.cai
@@ -22,7 +24,9 @@ public class WsServerMessageHandler extends SimpleChannelInboundHandler<WebSocke
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, WebSocketFrame webSocketFrame) throws Exception {
         System.out.println("msg");
-        ctx.channel().writeAndFlush(new TextWebSocketFrame("服务器时间：" + new Date()));
+        HashMap map = new HashMap();
+        map.put("msgType", 0);
+        ctx.channel().writeAndFlush(new TextWebSocketFrame(JSONUtil.toJsonStr(map)));
     }
 
     @Override

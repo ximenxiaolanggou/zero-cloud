@@ -22,9 +22,9 @@ public class ChannelManager {
      */
     public void save(String id, Channel channel) {
         Channel oChannel = channelRegister.get(id);
-        if(oChannel != null)
+        if(oChannel != null) {
             oChannel.close();
-
+        }
         channelRegister.put(id, channel);
     }
 

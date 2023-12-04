@@ -8,6 +8,7 @@ import center.helloworld.zero.server.system.api.model.entity.WxUser;
 import center.helloworld.zero.server.system.properties.WxAuthProperty;
 import center.helloworld.zero.server.system.service.SysUserService;
 import center.helloworld.zero.server.system.service.WxUserService;
+import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,9 @@ public class WxAuthController {
     @Autowired
     private WxUserService wxUserService;
 
+    @Autowired
+    private SysUserService sysUserService;
+
     @Value("${zero.jwt.secret}")
     private String secret;
 
@@ -42,6 +46,17 @@ public class WxAuthController {
         // 获取用户信息
         WxUser wxUser = JSONUtil.toBean(HttpUtil.get(wxAuthProperty.getUserInfoUrl(authTokenVO.getAccess_token())), WxUser.class);
 
+        SysUser newUser = null;
+        // 第一次登录，创建用户信息保存到 sys_user中
+        if((newUser = sysUserService.findByUnionid(wxUser.getUnionid())) == null) {
+            newUser = new SysUser();
+            newUser.setUsername(wxUser.getUnionid());
+            newUser.setPassword(BCrypt.hashpw("wogua", BCrypt.gensalt()));
+            newUser.setGender(wxUser.getSex());
+            newUser.setUnionid(wxUser.getUnionid());
+            newUser.setAvatar(wxUser.getHeadimgurl());
+            newUser.insert();
+        }
         // 更新或保存微信用户信息
         wxUserService.saveOrUpdate(wxUser);
 
@@ -50,7 +65,7 @@ public class WxAuthController {
         map.put("username", wxUser.getNickname());
         map.put("mobile", null);
         map.put("mail", null);
-        String token = JwtUtil.createToken(secret, wxUser.getUnionid(),map, null);
+        String token = JwtUtil.createToken(secret, String.valueOf(newUser.getId()),map, null);
         return Result.ok(token);
     }
 }
