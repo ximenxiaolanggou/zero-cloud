@@ -1,3 +1,5 @@
 .idea
 target
 /zero-framework/zero-starter-web/target
+/zero-server/zero-server-system/*.iml
+*.iml

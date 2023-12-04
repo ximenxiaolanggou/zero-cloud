@@ -67,10 +67,9 @@ public class SysUser extends Model<SysUser> {
     private Integer lock;
 
     /**
-     * 企业ID
+     * 微信用户唯一ID
      */
-    @JsonIgnore
-    private Long businessId;
+    private String unionid;
 
     /**
      * 创建时间
