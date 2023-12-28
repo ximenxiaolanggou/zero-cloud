@@ -53,11 +53,11 @@ public class WxAuthController {
             newUser.setUsername(wxUser.getUnionid());
             newUser.setPassword(BCrypt.hashpw("wogua", BCrypt.gensalt()));
             newUser.setGender(wxUser.getSex());
-            newUser.setUnionid(wxUser.getUnionid());
             newUser.setAvatar(wxUser.getHeadimgurl());
             newUser.insert();
         }
         // 更新或保存微信用户信息
+        wxUser.setSysUserId(newUser.getId());
         wxUserService.saveOrUpdate(wxUser);
 
         // 创建令牌

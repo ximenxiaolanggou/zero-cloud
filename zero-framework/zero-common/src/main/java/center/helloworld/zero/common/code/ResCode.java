@@ -29,6 +29,7 @@ public enum ResCode {
     ERROR_NOT_MATCH_ALGORITHN(false, 12, "算法不匹配"),
     ERROR_INVALID_CLAIM(false, 13, "失效的payload"),
     ERROR_INVALID_TOKEN(false, 14, "无效Token"),
+    ERROR_FRIEND_EXIST(false, 1, "好有已存在"),
     ;
 
     private boolean flag;

@@ -30,6 +30,7 @@ import org.springframework.stereotype.Component;
 
 import javax.annotation.Resource;
 
+
 /**
  * 握手处理
  */
@@ -38,6 +39,7 @@ import javax.annotation.Resource;
 @Component
 @ChannelHandler.Sharable
 public class WsServerHandshakeHandler extends ChannelInboundHandlerAdapter {
+
 
     @Value("${zero.jwtSecret}")
     private String jwtSecret;
@@ -99,7 +101,7 @@ public class WsServerHandshakeHandler extends ChannelInboundHandlerAdapter {
                     channelManager.remove(alreadySession.getSessionId());
                 }
                 // 创建会话
-                Session session = sessionService.createSession(Long.valueOf(userId), null);
+                Session session = sessionService.createSession(Long.valueOf(userId), token.toString(),null);
                 ctx.channel().attr(AttributeKey.valueOf("sessionId")).set(session.getSessionId());
                 channelManager.save(session.getSessionId(), ctx.channel());
             }

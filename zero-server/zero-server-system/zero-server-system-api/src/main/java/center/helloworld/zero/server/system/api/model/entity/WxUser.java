@@ -69,6 +69,11 @@ public class WxUser extends Model<WxUser> {
     private String[] privilege;
 
     /**
+     * 系统用户ID
+     */
+    private Long sysUserId;
+
+    /**
      * 创建时间
      */
     private LocalDateTime createtime;

@@ -76,12 +76,14 @@ public class JwtFilter implements GlobalFilter {
             for (String anonUri : anonUrisPattern) {
                 if(anonUri.endsWith("/*")) {
                     // 路径头部相同，并且层级一样
-                    if(path.startsWith(anonUri) && anonUri.split("/").length == path.split("/").length)
+                    if(path.startsWith(anonUri) && anonUri.split("/").length == path.split("/").length) {
                         return chain.filter(exchange);
+                    }
                 }else if(anonUri.endsWith("/**")) {
                     // 路径头部相同，并且层级大于等于
-                    if(path.startsWith(anonUri) && anonUri.split("/").length >= path.split("/").length)
+                    if(path.startsWith(anonUri) && anonUri.split("/").length >= path.split("/").length) {
                         return chain.filter(exchange);
+                    }
                 }
             }
         }

@@ -22,17 +22,13 @@ public class FriendRelation extends Model<FriendRelation> {
     /**
      * 主键ID
      */
-    private Long id;
+    @TableId
+    private Long userId;
 
     /**
      * 关联朋友ID集合
      */
-    private String friend_id;
-
-    /**
-     * 状态 1. 待确认 2. 已拒绝
-     */
-    private Integer status = 1;
+    private String friendIds;
 
     /**
      * 创建时间
@@ -46,6 +42,6 @@ public class FriendRelation extends Model<FriendRelation> {
 
     @Override
     public Serializable pkVal() {
-        return this.id;
+        return this.userId;
     }
 }
