@@ -32,4 +32,13 @@ public class WxUserService extends ServiceImpl<WxUserMapper, WxUser> {
     public List<WxUser> list(String searchKey, List<Long> sysUserIds) {
         return wxUserMapper.selectList(new LambdaQueryWrapper<WxUser>().like(WxUser::getNickname, searchKey).in(WxUser::getSysUserId, sysUserIds).orderByAsc(WxUser::getNickname));
     }
+
+    /**
+     * 根据unionid判断微信用户是否存在
+     * @param unionid 用户微信唯一标识
+     * @return
+     */
+    public boolean existByUnionid(String unionid) {
+        return wxUserMapper.exists(new LambdaQueryWrapper<WxUser>().eq(WxUser::getUnionid, unionid));
+    }
 }

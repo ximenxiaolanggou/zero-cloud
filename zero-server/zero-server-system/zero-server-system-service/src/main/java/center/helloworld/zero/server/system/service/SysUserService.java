@@ -22,12 +22,4 @@ public class SysUserService extends ServiceImpl<SysUserMapper, SysUser> {
         return userMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUsername, username));
     }
 
-    /**
-     * 根据unionid获取用户信息
-     * @param unionid
-     * @return
-     */
-    public SysUser findByUnionid(String unionid) {
-        return userMapper.selectOne(new LambdaQueryWrapper<SysUser>().eq(SysUser::getUnionid, unionid));
-    }
 }

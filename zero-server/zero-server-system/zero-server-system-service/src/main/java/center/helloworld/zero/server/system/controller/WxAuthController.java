@@ -46,18 +46,21 @@ public class WxAuthController {
         // 获取用户信息
         WxUser wxUser = JSONUtil.toBean(HttpUtil.get(wxAuthProperty.getUserInfoUrl(authTokenVO.getAccess_token())), WxUser.class);
 
-        SysUser newUser = null;
+        SysUser sysUser = null;
         // 第一次登录，创建用户信息保存到 sys_user中
-        if((newUser = sysUserService.findByUnionid(wxUser.getUnionid())) == null) {
-            newUser = new SysUser();
-            newUser.setUsername(wxUser.getUnionid());
-            newUser.setPassword(BCrypt.hashpw("wogua", BCrypt.gensalt()));
-            newUser.setGender(wxUser.getSex());
-            newUser.setAvatar(wxUser.getHeadimgurl());
-            newUser.insert();
+        WxUser oldWxuser = wxUserService.findByUnionid(wxUser.getUnionid());
+        if(oldWxuser == null) {
+            sysUser = new SysUser();
+            sysUser.setUsername(wxUser.getUnionid());
+            sysUser.setPassword(BCrypt.hashpw("wogua", BCrypt.gensalt()));
+            sysUser.setGender(wxUser.getSex());
+            sysUser.setAvatar(wxUser.getHeadimgurl());
+            sysUser.insert();
+        }else {
+            sysUser = sysUserService.getById(oldWxuser.getSysUserId());
         }
         // 更新或保存微信用户信息
-        wxUser.setSysUserId(newUser.getId());
+        wxUser.setSysUserId(sysUser.getId());
         wxUserService.saveOrUpdate(wxUser);
 
         // 创建令牌
@@ -65,7 +68,7 @@ public class WxAuthController {
         map.put("username", wxUser.getNickname());
         map.put("mobile", null);
         map.put("mail", null);
-        String token = JwtUtil.createToken(secret, String.valueOf(newUser.getId()),map, null);
+        String token = JwtUtil.createToken(secret, String.valueOf(sysUser.getId()),map, null);
         return Result.ok(token);
     }
 }
