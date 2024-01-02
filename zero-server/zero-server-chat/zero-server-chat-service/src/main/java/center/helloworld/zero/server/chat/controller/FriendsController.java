@@ -82,7 +82,7 @@ public class FriendsController {
         friendApply.setFriend_id(friendId);
         friendApply.setStatus(1);
         friendApplyService.save(friendApply);
-        // 2. 如果用户在线发送好友添加请求
+        // 2. 如果用户在线发送好友添加请求，如果不在线，等上线推送过去
         Session friendSession = sessionService.getSessionByUserId(friendId);
         if(friendSession != null) {
             Map<String,Object> map = new HashMap();

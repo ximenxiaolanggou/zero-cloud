@@ -2,8 +2,10 @@ package center.helloworld.zero.server.system.service;
 
 import center.helloworld.zero.server.system.api.model.entity.WxUser;
 import center.helloworld.zero.server.system.mapper.WxUserMapper;
+import cn.hutool.core.collection.CollectionUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,11 +28,20 @@ public class WxUserService extends ServiceImpl<WxUserMapper, WxUser> {
 
     /**
      * 列表
-     * @param searchKey
+     * @param searchKey 查询关键字
+     * @param sysUserIds 系统用户ID集合，如果不传递则为查询所有
      * @return
      */
     public List<WxUser> list(String searchKey, List<Long> sysUserIds) {
-        return wxUserMapper.selectList(new LambdaQueryWrapper<WxUser>().like(WxUser::getNickname, searchKey).in(WxUser::getSysUserId, sysUserIds).orderByAsc(WxUser::getNickname));
+        LambdaQueryWrapper<WxUser> condition = new LambdaQueryWrapper<>();
+        if(StringUtils.isNotBlank(searchKey)) {
+            condition.like(WxUser::getNickname, searchKey);
+        }
+        if(CollectionUtil.isNotEmpty(sysUserIds)) {
+            condition.in(WxUser::getSysUserId, sysUserIds);
+        }
+        condition.orderByAsc(WxUser::getNickname);
+        return wxUserMapper.selectList(condition);
     }
 
     /**

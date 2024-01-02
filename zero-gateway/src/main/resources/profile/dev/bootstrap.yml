@@ -6,10 +6,10 @@ spring:
   cloud:
     nacos:
       discovery:
-        namespace: dev
+        namespace: ppe
         server-addr: 150.158.78.149:8848
       config:
-        namespace: dev
+        namespace: ppe
         server-addr: 150.158.78.149:8848
         # 配置文件格式
         file-extension: yml
