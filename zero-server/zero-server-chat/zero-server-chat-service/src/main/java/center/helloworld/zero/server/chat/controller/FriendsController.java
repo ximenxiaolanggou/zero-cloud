@@ -3,16 +3,16 @@ package center.helloworld.zero.server.chat.controller;
 import center.helloworld.zero.common.base.Result;
 import center.helloworld.zero.common.code.ResCode;
 import center.helloworld.zero.common.exception.ApiException;
-import center.helloworld.zero.server.chat.api.model.entity.FriendApply;
-import center.helloworld.zero.server.chat.api.model.entity.FriendRelation;
-import center.helloworld.zero.server.chat.api.model.entity.Session;
+import center.helloworld.zero.server.chat.api.model.model.FriendApply;
+import center.helloworld.zero.server.chat.api.model.model.FriendRelation;
+import center.helloworld.zero.server.chat.api.model.model.Session;
+import center.helloworld.zero.server.chat.api.model.model.wx.WxUser;
 import center.helloworld.zero.server.chat.netty.channel.ChannelManager;
 import center.helloworld.zero.server.chat.netty.session.service.SessionService;
 import center.helloworld.zero.server.chat.service.FriendApplyService;
 import center.helloworld.zero.server.chat.service.FriendRelationService;
-import center.helloworld.zero.server.system.api.model.entity.WxUser;
+import center.helloworld.zero.server.chat.service.WxUserService;
 import center.helloworld.zero.server.system.api.service.SysUserService;
-import center.helloworld.zero.server.system.api.service.WxUserService;
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.util.ArrayUtil;
 import cn.hutool.core.util.CharsetUtil;
@@ -82,7 +82,7 @@ public class FriendsController {
         friendApply.setFriend_id(friendId);
         friendApply.setStatus(1);
         friendApplyService.save(friendApply);
-        // 2. 如果用户在线发送好友添加请求
+        // 2. 如果用户在线发送好友添加请求，如果不在线，等上线推送过去
         Session friendSession = sessionService.getSessionByUserId(friendId);
         if(friendSession != null) {
             Map<String,Object> map = new HashMap();

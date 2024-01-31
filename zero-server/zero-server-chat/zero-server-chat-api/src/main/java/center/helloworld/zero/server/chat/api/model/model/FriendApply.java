@@ -1,4 +1,4 @@
-package center.helloworld.zero.server.chat.api.model.entity;
+package center.helloworld.zero.server.chat.api.model.model;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

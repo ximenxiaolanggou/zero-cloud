@@ -3,11 +3,9 @@ package center.helloworld.zero.server.system.controller;
 import center.helloworld.zero.server.system.api.model.entity.SysUser;
 import center.helloworld.zero.server.system.service.SysUserService;
 import center.helloworld.zero.common.base.Result;
+import cn.hutool.crypto.digest.BCrypt;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,5 +40,27 @@ public class SysUserController {
     public Result findUserByUsername(@RequestParam("username") String username) {
         SysUser user = userService.findUserByUsername(username);
         return Result.ok(user);
+    }
+
+    /**
+     * 创建用户
+     * @param sysUser
+     * @return
+     */
+    @PostMapping
+    public Result addUser(@RequestBody SysUser sysUser) {
+        sysUser.setPassword(BCrypt.hashpw("wogua", BCrypt.gensalt()));
+        userService.save(sysUser);
+        return Result.ok(sysUser.getId());
+    }
+
+    /**
+     * 根据ID查询
+     * @param id
+     * @return
+     */
+    @GetMapping("findById/{id}")
+    public SysUser findById(@PathVariable("id") Long id) {
+        return userService.getById(id);
     }
 }

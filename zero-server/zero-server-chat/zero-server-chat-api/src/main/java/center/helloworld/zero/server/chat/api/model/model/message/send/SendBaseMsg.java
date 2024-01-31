@@ -1,6 +1,5 @@
-package center.helloworld.zero.server.chat.api.model.entity.message.send;
+package center.helloworld.zero.server.chat.api.model.model.message.send;
 
-import center.helloworld.zero.server.chat.api.model.entity.message.send.SendMsgType;
 import lombok.Data;
 
 /**

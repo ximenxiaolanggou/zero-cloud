@@ -3,9 +3,9 @@ package center.helloworld.zero.server.chat.netty.handler;
 
 import center.helloworld.zero.common.code.ResCode;
 import center.helloworld.zero.common.utils.JwtUtil;
-import center.helloworld.zero.server.chat.api.model.entity.Session;
-import center.helloworld.zero.server.chat.api.model.entity.message.send.SendBaseMsg;
-import center.helloworld.zero.server.chat.api.model.entity.message.send.SendMsgType;
+import center.helloworld.zero.server.chat.api.model.model.Session;
+import center.helloworld.zero.server.chat.api.model.model.message.send.SendBaseMsg;
+import center.helloworld.zero.server.chat.api.model.model.message.send.SendMsgType;
 import center.helloworld.zero.server.chat.netty.channel.ChannelManager;
 import center.helloworld.zero.server.chat.netty.session.service.SessionService;
 import cn.hutool.core.net.url.UrlBuilder;
@@ -41,7 +41,7 @@ import javax.annotation.Resource;
 public class WsServerHandshakeHandler extends ChannelInboundHandlerAdapter {
 
 
-    @Value("${zero.jwtSecret}")
+    @Value("${zero.jwt.secret}")
     private String jwtSecret;
 
     @Autowired

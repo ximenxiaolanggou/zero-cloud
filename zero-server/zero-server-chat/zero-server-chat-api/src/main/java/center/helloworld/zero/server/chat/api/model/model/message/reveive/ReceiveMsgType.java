@@ -1,4 +1,4 @@
-package center.helloworld.zero.server.chat.api.model.entity.message.reveive;
+package center.helloworld.zero.server.chat.api.model.model.message.reveive;
 
 /**
  * @author zhishun.cai

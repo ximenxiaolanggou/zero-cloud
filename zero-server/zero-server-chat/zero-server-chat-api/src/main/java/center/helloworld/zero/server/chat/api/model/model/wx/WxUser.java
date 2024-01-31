@@ -1,11 +1,10 @@
-package center.helloworld.zero.server.system.api.model.entity;
+package center.helloworld.zero.server.chat.api.model.model.wx;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.extension.activerecord.Model;
 import lombok.Data;
 
-import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**

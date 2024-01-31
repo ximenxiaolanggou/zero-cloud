@@ -1,13 +1,13 @@
-package center.helloworld.zero.server.system.controller;
+package center.helloworld.zero.server.chat.controller;
 
 import center.helloworld.zero.common.base.Result;
 import center.helloworld.zero.common.utils.JwtUtil;
+import center.helloworld.zero.server.chat.api.model.model.wx.WxUser;
+import center.helloworld.zero.server.chat.properties.WxAuthProperty;
+import center.helloworld.zero.server.chat.service.WxUserService;
 import center.helloworld.zero.server.system.api.model.entity.SysUser;
 import center.helloworld.zero.server.system.api.model.vo.WxAuthTokenVO;
-import center.helloworld.zero.server.system.api.model.entity.WxUser;
-import center.helloworld.zero.server.system.properties.WxAuthProperty;
-import center.helloworld.zero.server.system.service.SysUserService;
-import center.helloworld.zero.server.system.service.WxUserService;
+import center.helloworld.zero.server.system.api.service.SysUserService;
 import cn.hutool.crypto.digest.BCrypt;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONUtil;
@@ -16,8 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,12 +50,12 @@ public class WxAuthController {
         if(oldWxuser == null) {
             sysUser = new SysUser();
             sysUser.setUsername(wxUser.getUnionid());
-            sysUser.setPassword(BCrypt.hashpw("wogua", BCrypt.gensalt()));
-            sysUser.setGender(wxUser.getSex());
+            sysUser.setNickname(wxUser.getNickname());
             sysUser.setAvatar(wxUser.getHeadimgurl());
-            sysUser.insert();
+            Result result = sysUserService.addUser(sysUser);
+            sysUser.setId(Long.valueOf(String.valueOf(result.getData())));
         }else {
-            sysUser = sysUserService.getById(oldWxuser.getSysUserId());
+            sysUser = sysUserService.findById(oldWxuser.getSysUserId());
         }
         // 更新或保存微信用户信息
         wxUser.setSysUserId(sysUser.getId());

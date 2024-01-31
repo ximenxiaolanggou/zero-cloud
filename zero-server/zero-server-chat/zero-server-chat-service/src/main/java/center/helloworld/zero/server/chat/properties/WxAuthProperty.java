@@ -1,4 +1,4 @@
-package center.helloworld.zero.server.system.properties;
+package center.helloworld.zero.server.chat.properties;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;

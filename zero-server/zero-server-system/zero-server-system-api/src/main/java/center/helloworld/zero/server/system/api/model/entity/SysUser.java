@@ -35,6 +35,11 @@ public class SysUser extends Model<SysUser> {
     private String username;
 
     /**
+     * 别名
+     */
+    private String nickname;
+
+    /**
      * 密码
      */
     @JsonIgnore

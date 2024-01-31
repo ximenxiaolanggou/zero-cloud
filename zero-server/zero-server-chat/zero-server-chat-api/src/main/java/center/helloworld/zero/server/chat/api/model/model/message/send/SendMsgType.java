@@ -1,6 +1,4 @@
-package center.helloworld.zero.server.chat.api.model.entity.message.send;
-
-import lombok.Data;
+package center.helloworld.zero.server.chat.api.model.model.message.send;
 
 /**
  * @author zhishun.cai

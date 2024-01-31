@@ -1,7 +1,6 @@
-package center.helloworld.zero.server.system.mapper;
+package center.helloworld.zero.server.chat.mapper;
 
-import center.helloworld.zero.server.system.api.model.entity.SysUser;
-import center.helloworld.zero.server.system.api.model.entity.WxUser;
+import center.helloworld.zero.server.chat.api.model.model.wx.WxUser;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
 

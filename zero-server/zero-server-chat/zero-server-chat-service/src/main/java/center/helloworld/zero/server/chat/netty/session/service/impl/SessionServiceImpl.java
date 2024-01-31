@@ -1,7 +1,6 @@
 package center.helloworld.zero.server.chat.netty.session.service.impl;
 
-import center.helloworld.zero.server.chat.api.model.entity.Session;
-import center.helloworld.zero.server.chat.netty.session.dao.MemorySessionDao;
+import center.helloworld.zero.server.chat.api.model.model.Session;
 import center.helloworld.zero.server.chat.netty.session.dao.SessionDao;
 import center.helloworld.zero.server.chat.netty.session.service.SessionService;
 import com.alibaba.nacos.common.util.UuidUtils;

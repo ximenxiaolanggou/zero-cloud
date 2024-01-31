@@ -1,6 +1,6 @@
 package center.helloworld.zero.server.chat.netty.session.dao;
 
-import center.helloworld.zero.server.chat.api.model.entity.Session;
+import center.helloworld.zero.server.chat.api.model.model.Session;
 import org.springframework.stereotype.Repository;
 
 import java.util.Map;
